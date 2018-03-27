@@ -20,5 +20,6 @@ public class TestAnno {
         ApplicationContext aopContext = new ClassPathXmlApplicationContext("bean3.xml");
         Book book = (Book)aopContext.getBean("book");
         book.add();
+
     }
 }

@@ -186,7 +186,7 @@ public class UserFactory{
 ```txt
    ApplicationContext context = new ClassPathXmlApplicationContext("bean1.xml");
 ```    
-  (1) new对象，功能可以实现，效率很低
+  (1) new对象，功能可以实现，效率很低,每次访问都会重新创建
   
 2. 实现思想，把加载配置文件和创建对象过程，在服务器启动时完成。
 
@@ -267,6 +267,10 @@ bean2.xml
 - AOP准备工作
     1. 导入jar包
     2. 导入AOP约束 ---bean3.xml   
+```txt
+xmlns:aop="http://www.springframework.org/schema/aop"
+xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd"
+``` 
  
 - 使用表达式配置切入点
     1. 切入点： 实际被增强的方法
@@ -284,6 +288,80 @@ bean2.xml
             
          (4) execution(* save*(..))
             匹配所有save开头的方法    
+ 
+- 配置
+```xml
+    <!--2 配置aop操作-->
+    <aop:config>
+        <!--2.1 配置切入点-->
+        <aop:pointcut id="pointcut1" expression="execution(* com.lessionTwo.aop.Book.add(..))"/>
+        <!--2.2 配置切面-->
+        <aop:aspect ref="enhanceBook">
+            <!--配置增强类型
+                method: 增强类里面使用哪个方法作为前置
+            -->
+            <aop:before method="before1" pointcut-ref="pointcut1"/>
+            <aop:after-returning method="after1" pointcut-ref="pointcut1"/>
             
+            <!--环绕-->
+            <aop:around method="around1" pointcut-ref="pointcut1"/>
+        </aop:aspect>
+    </aop:config>
+```            
             
-            
+ 
+###log4j 
+
+查看日志
+    
+    1. 导入jar包
+    2. 新建log4j.properties文件
+  - 配置
+    log4j.rootLogger = info, stdout
+    (1) info: 看到基本信息
+    (2) debug: 看到更详细信息  
+ 
+ 
+###web整合            
+    优化xml配置文件加载
+```xml
+<!--配置监听器-->
+<listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+</listener>
+<!--指定spring配置文件位置-->
+<context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-name>classpath:beanLessionTwoPro.xml</param-name>
+</context-param>
+```
+
+    
+##Section Three
+
+###基于aspectj的注解aop
+    1. 创建<bean>对象
+    2. 开启aop操作
+```text
+<aop:aspectj-autoproxy/>
+```
+    3. 在增强类中完成注解
+```text
+@Aspect //类名前
+@Before(value = "execution(* com.lessionThree.Ebook.add(..))") //放置于方法前
+@After() //放置于方法后
+
+@Around()
+搭配proceedingJoinPoint.proceed();使用
+```        
+
+###Spring持久化层jdbc
+
+1. 创建对象，设置数据库信息
+
+2. 创建jdbcTemplate对象，设置数据源
+
+3. 调用jdbcTemplate对象里面的方法实现操作
+
+    
+
