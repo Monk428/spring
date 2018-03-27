@@ -9,6 +9,22 @@ public class Student {
 
     private int age;
 
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
     public void setId(int id) {
         this.id = id;
     }

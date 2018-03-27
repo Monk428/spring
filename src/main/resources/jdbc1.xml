@@ -3,14 +3,14 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <bean id="ds" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql:///day03"/>
         <property name="username" value="root"/>
-        <property name="password" value="root"/>
+        <property name="password" value="feng0828"/>
     </bean>
 
-    <bean id="jdbcTemplate" class="com.lessionThree.jdbc.JdbcTemplateDemo1">
-        <property name="dataSource" ref="dataSource"/>
+    <bean id="jdbcTemplate" class="com.lessionThree.jdbc.UserDao">
+        <property name="dataSource" ref="ds"/>
     </bean>
 </beans>
